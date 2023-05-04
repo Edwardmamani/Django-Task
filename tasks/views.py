@@ -32,7 +32,7 @@ def tasks(request):
 
     return render(request, 'tasks.html', {
         'tasks': tasks,
-        'titulo':"Task Pending"
+        'titulo': "Task Pending"
     })
 
 
@@ -153,7 +153,6 @@ def task_detail(request, task_id):
 
 @login_required
 def complete_task(request, task_id):
-    
     task = get_object_or_404(Task, pk=task_id, user=request.user)
 
     if request.method == 'POST':
