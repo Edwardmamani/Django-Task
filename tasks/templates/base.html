@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -29,30 +29,30 @@
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <a class="nav-link" class="nav-link disabled" href="/"
-                >HOME Menu</a
+                >Sobre mostros</a
               >
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'tasks' %}">task Pending</a>
+              <a class="nav-link" href="{% url 'create_task' %}">Crear tareas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'tasks' %}">Tareas pendiente</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'tasks_complete' %}"
-                >taks Complete</a
+                >Tareas Completadas</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'create_task' %}">create task</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/signout">Logoup Cerrar Sesion</a>
+              <a class="nav-link" href="/signout">Cerrar Sesion</a>
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="/signup">Signup Registrarse</a>
+              <a class="nav-link" href="/signup">Registrarse</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/signin">signin Iniciar sesion</a>
+              <a class="nav-link" href="/signin">Iniciar sesion</a>
             </li>
             {% endif %}
           </ul>

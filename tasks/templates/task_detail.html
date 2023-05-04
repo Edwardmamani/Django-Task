@@ -7,18 +7,18 @@
       {{error}}
       <form action="" method="POST">
         {% csrf_token %} {{form.as_p}}
-        <button class="btn btn-primary">Update actualizar</button>
+        <button class="btn btn-primary">Actualizar</button>
       </form>
-        <div class="mt-2 d-flex">
-          <form action="{% url 'complete_task' task.id %}" method="POST">
-            {% csrf_token %}
-            <button class="btn btn-secondary">Complete</button>
-          </form>
-          <form action="{% url 'delete_task' task.id %}" method="POST">
-            {% csrf_token %}
-            <button class="btn btn-light">Delete</button>
-          </form>
-        </div>
+      <div class="mt-2 d-flex">
+        <form action="{% url 'complete_task' task.id %}" method="POST">
+          {% csrf_token %}
+          <button class="btn btn-secondary">Completado</button>
+        </form>
+        <form action="{% url 'delete_task' task.id %}" method="POST">
+          {% csrf_token %}
+          <button class="btn btn-light">Eliminar</button>
+        </form>
+      </div>
       </form>
     </div>
   </div>

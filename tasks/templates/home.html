@@ -26,11 +26,13 @@
       accusamus quaerat. Obcaecati ab, nisi quas hic rem dignissimos velit
       deleniti nihil molestiae.
     </p>
-
+    {% if not user.is_authenticated %}
+    
     <div class="text-center">
-      <a class="btn btn-secondary" href="{% url 'signin'%}">Signin</a>
-      <a class="btn btn-dark" href="{% url 'signup'%}">Signup</a>
+      <a class="btn btn-secondary" href="{% url 'signin'%}">Iniciar sesion</a>
+      <a class="btn btn-dark" href="{% url 'signup'%}">Registrase</a>
     </div>
+    {% endif %}
   </section>
 </main>
 {% endblock %}
