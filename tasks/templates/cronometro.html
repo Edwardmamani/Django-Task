@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="container py-5">
+    <h1>Hora y Fecha:</h1>
+    <div class="contenedorHoras">
+      <p class="pelon"> <b>Hora: </b><span id="hora"></span></p>
+      <p class="pelon"><b>Hoy: </b><span id="dia"></span>.</p>
+      <p class="pelon"><b>Fecha: </b><span id="fecha"></span></p>
+    </div>
+    <h1>Tiempo</h1>
+    <form id="my-form">
+      {% csrf_token %}
+      <label for="horasInput">Horas:</label>
+      <input type="number" id="horasInput" name="horasInput" value="12"/>
+      <label for="minutosInput">Minutos:</label>
+      <input type="number" id="minutosInput" name="minutosInput" value="0"/>
+      <label for="segundosInput">Segundos:</label>
+      <input type="number" id="segundosInput" name="segundosInput" value="0"/>
+      <button type="submit">Enviar</button>
+    </form>
+    <p id="valor-actual"></p>
+      <p class="pelon"><b>Tiempo Transcurido:</b> <span id = "tiempo"></span></p>
+    <div class="contenedorHoras">
+      <p class="pelon">Horas <span id = "horas"></span></p>
+      <p class="pelon">Minutos <span id = "minutos"></span></p>
+      <p class="pelon">Segundo: S <span id = "segundos"></span></p>
+      <p class="pelon">segundos: C <span id = "contador"></span></p>
+    </div>
+</main>
+    
+    <script>
+     (function () {
+        function relog() {
+          var seguTotal = localStorage.getItem("seguTotal") || 0;
+          var contador = localStorage.getItem("contador") || 0;
+          var resive = localStorage.getItem("resive") || 0;
+
+          // console.log("Esto es el resive", resive);
+
+          var Ffecha = new Date();
+          var Fhoras = Ffecha.getHours().toString().padStart(2, "0"); //se combierte en un string
+          var Fminutos = Ffecha.getMinutes().toString().padStart(2, "0"); //se combierte en un string
+          var Fsegundos = Ffecha.getSeconds().toString().padStart(2, "0"); //se combierte en un string
+
+          var seguActual =
+            Ffecha.getHours() * 3600 +
+            Ffecha.getMinutes() * 60 +
+            Ffecha.getSeconds();
+
+          // console.log("___________________");
+          // console.log(
+          //   Ffecha.getHours(),
+          //   Ffecha.getMinutes(),
+          //   Ffecha.getSeconds()
+          // );
+          // console.log("___________________");
+
+          seguTotal = Number(seguTotal);
+          resive = Number(resive);
+          if(resive < contador){
+              resive = seguActual - seguTotal;
+          }
+
+
+          localStorage.setItem("resive", resive);
+          // resive = contador- resive;
+
+          // console.log(typeof seguActual);
+          // console.log(typeof seguTotal);
+          // console.log(typeof resive);
+          // console.log(resive);
+          // console.log(seguActual);
+          // console.log(seguTotal);
+
+          var horas = Math.floor(resive / 3600);
+          var minutos = Math.floor((resive % 3600) / 60);
+          var segundos = resive % 60;
+
+          // Convertir a cadenas de texto y agregar ceros iniciales si es necesario
+          var horasStr = horas.toString().padStart(2, "0");
+          var minutosStr = minutos.toString().padStart(2, "0");
+          var segundosStr = segundos.toString().padStart(2, "0");
+
+          // Crear cadena de texto en formato "hh:mm:ss"
+          var formato = horasStr + ":" + minutosStr + ":" + segundosStr;
+
+          // document.getElementById("tiempo").innerHTML= formato; //imprime en el HTML
+          document.getElementById("tiempo").innerHTML = formato; // imprime en el HTML
+          document.getElementById("horas").innerHTML = horasStr; // imprime en el HTML
+          document.getElementById("minutos").innerHTML = minutosStr; // imprime en el HTML
+          document.getElementById("segundos").innerHTML = segundosStr; //imprime en el HTML
+          document.getElementById("contador").innerHTML = contador; // imprime en el HTML
+          if (resive >= contador) {
+            console.log("La condicion de cumple, salio de la funcion. ");
+            return;
+          }
+          setTimeout(relog, 1000);
+        }
+        relog();
+      })();
+    </script>
+    <script>
+      function actualizarHora() {
+        var fecha = new Date();
+
+        var horas = fecha.getHours().toString().padStart(2, "0");
+        var minutos = fecha.getMinutes().toString().padStart(2, "0");
+        var segundos = fecha.getSeconds().toString().padStart(2, "0");
+
+        var dia = fecha.getDate().toString().padStart(2, "0");
+        var mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+        var anio = fecha.getFullYear().toString();
+
+        var horaActual = horas + ":" + minutos + ":" + segundos;
+        var fechaActual = dia + "/" + mes + "/" + anio;
+
+        document.getElementById("hora").innerHTML = horaActual;
+
+        document.getElementById("fecha").innerHTML = fechaActual;
+      }
+      actualizarHora();
+      setInterval(actualizarHora, 1000);
+    </script>
+    <script>
+      function obtenerDia() {
+        var fecha = new Date();
+        var dias = [
+          "Domingo",
+          "Lunes",
+          "Martes",
+          "Miércoles",
+          "Jueves",
+          "Viernes",
+          "Sábado",
+        ];
+        var nombreDia = dias[fecha.getDay()];
+        document.getElementById("dia").innerHTML = nombreDia;
+      }
+      obtenerDia();
+    </script>
+    <script>
+    //  Obtener el formulario y el resultado
+      var form = document.getElementById("my-form");
+      var result = document.getElementById("result");
+
+      // Agregar un evento al formulario
+      form.addEventListener("submit", function (event) {
+        // Evitar que la página se recargue
+        // event.preventDefault();
+
+        // Obtener el valor del input
+        var horasInput = document.getElementById("horasInput").value;
+        var minutosInput = document.getElementById("minutosInput").value;
+        var segundosInput = document.getElementById("segundosInput").value;
+
+
+        var inputValue = horasInput*360 + minutosInput*6 + segundosInput;
+        
+        // console.log("Este es el valor introducido _______", inputValue);
+        // console.log(typeof inputValue);
+        inputValue = Number(inputValue);
+        // Procesar el valor en JavaScript
+        var seguTotal = localStorage.getItem("seguTotal");
+        if (seguTotal === null) {
+          seguTotal = 0;
+        }
+
+        var seguTotal = segundoTotal(seguTotal);
+        console.log("Tipo de seguTotal", typeof seguTotal); //number
+        localStorage.setItem("seguTotal", seguTotal);
+
+        localStorage.setItem("contador", inputValue);
+        localStorage.setItem("resive", 0);
+
+      });
+
+      function segundoTotal() {
+        var Ffecha = new Date();
+        var seguActual =
+          Ffecha.getHours() * 3600 +
+          Ffecha.getMinutes() * 60 +
+          Ffecha.getSeconds(); // + segundo;
+
+        console.log("++++++++++++++++++++++++++++++++++");
+        console.log(seguActual);
+        console.log(typeof seguActual);
+
+        return seguActual;
+      }
+    </script>
+{% endblock %}

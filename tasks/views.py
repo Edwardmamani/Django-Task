@@ -180,3 +180,8 @@ def tasks_complete(request):
         'tasks': tasks,
         'titulo': "Tasks Complete",
     })
+
+
+@login_required
+def temporizador(request):
+    return render(request, 'cronometro.html')
