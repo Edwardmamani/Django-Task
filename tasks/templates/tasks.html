@@ -1,29 +1,32 @@
 {% extends 'base.html' %} {% block content %}
 <main class="container">
-  <div class="row">
-    <div class="col-md-6 offset-md-3">
+  <!-- <div class="row"> -->
+  <section class="card card-body">
+    <!-- <div class="col-md-6 offset-md-3"> -->
       <h1 class="text-center display-3 py-5">{{titulo}}</h1>
+      {% for task in tasks %}
       <ul class="list-group">
-        {% for task in tasks %}
-        <a class="list-group-item" href="{% url 'task_detail' task.id %}">
+        <a class="task" href="{% url 'task_detail' task.id %}">
           <header class="d-flex justify-content-between">
             {% if task.important %}
-            <h1 class="fw-bold text-success">{{ task.title }}</h1>
+            <h4 class="fw-bold text-success">{{ task.title }}</h4>
             {% else %}
-            <h1 class="fw-bold">{{task.title}}</h1>
+            <h4 class="fw-bold">{{task.title}}</h4>
             {% endif %}
             <p>{{task.user.username}}</p>
           </header>
 
-          <p>{{task.descripcion}}</p>
-          <p>{{task.datecompleted|date:'M j Y M:i'}}</p>
+          <p class="descripciontask">{{task.descripcion}}</p>
+          <!-- <p>{{task.datecompleted|date:'M j Y:i'}}</p> -->
 
           <!-- <p>{{task.important}}</p> -->
           <!-- <li>{{task.created}}</li> -->
         </a>
-        {% endfor %}
       </ul>
-    </div>
-  </div>
+        {% endfor %}
+    <!-- </div> -->
+  </section>
+
+  <!-- </div> -->
 </main>
 {% endblock%}
